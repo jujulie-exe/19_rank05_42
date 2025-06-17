@@ -19,12 +19,11 @@ else ifeq ($(MODE), release)
 CFLAGS += -g3 -flto -march=native 
 else ifeq ($(MODE), noflags)
 CFLAGS = -std=c++98
-else
-$(error Unknown MODE '$(MODE)'. Valid options are: Hard, debug, release, noflags, math)
 endif
 
 SRC_DIR = src
-SRCS =
+SRCS = $(SRC_DIR)/main.cpp \
+	   $(SRC_DIR)/Bureaucrat.cpp
 
 
 OBJ_DIR = obj
@@ -50,15 +49,14 @@ fclean: clean
 
 re: fclean all
 
-ru: all
+run: all
 ifeq ($(MODE), valgrind)
 	valgrind ./$(NAME)
-else ifeq($(MODE), gdb)
-	gdb ./$(MODE)
-else
-	./$(MODE)
+else ifeq ($(MODE), normal)
+	./$(NAME)
+else ifeq ($(MODE), gdb)
+	gdb ./$(NAME)
 endif 
-
 
 
 .PHONY: all clean fclean re
