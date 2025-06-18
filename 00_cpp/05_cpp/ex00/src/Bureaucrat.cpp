@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:01:43 by jfranco           #+#    #+#             */
-/*   Updated: 2025/06/17 15:16:51 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:27:18 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ Bureaucrat::Bureaucrat(const std::string& nameREF, int n)
 //(((n < 1) ? 1 : (n > 150 ? 150 : n)))
 {
     std::cout << getName() << " " << getGrade() << " Parametre constructor called" << std::endl;
-	if (grade > 150)
+	if (grade > MAX_GRADE)
 		throw GradeTooLowException();
-	else if (grade < 0)
+	else if (grade < MIN_GRADE)
 		throw GradeTooHighException();
 }
 
@@ -32,10 +32,9 @@ Bureaucrat::Bureaucrat()
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const & src)
+	: name(src.getName()), grade(src.getGrade())
 {
     std::cout << "Copy constructor called" << std::endl;
-	//this->name = src.getName();
-	this->grade = src.getGrade();
 }
 
 /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/

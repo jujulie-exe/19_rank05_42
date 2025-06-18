@@ -21,7 +21,8 @@ endif
 
 SRC_DIR = src
 SRCS = $(SRC_DIR)/main.cpp \
-	   $(SRC_DIR)/Bureaucrat.cpp
+	   $(SRC_DIR)/Bureaucrat.cpp \
+	   $(SRC_DIR)/Form.cpp
 
 
 OBJ_DIR = obj

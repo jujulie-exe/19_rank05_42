@@ -6,11 +6,12 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:01:43 by jfranco           #+#    #+#             */
-/*   Updated: 2025/06/17 17:24:41 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:22:13 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Bureaucrat.hpp"
+#include "../include/Form.hpp"
 
 /*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 
@@ -19,9 +20,9 @@ Bureaucrat::Bureaucrat(const std::string& nameREF, int n)
 //(((n < 1) ? 1 : (n > 150 ? 150 : n)))
 {
     std::cout << getName() << " " << getGrade() << " Parametre constructor called" << std::endl;
-	if (grade > 150)
+	if (grade > MAX_GRADE)
 		throw GradeTooLowException();
-	else if (grade < 0)
+	else if (grade < MIN_GRADE)
 		throw GradeTooHighException();
 }
 
@@ -32,10 +33,9 @@ Bureaucrat::Bureaucrat()
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const & src)
+	: name(src.getName()), grade(src.getGrade())
 {
     std::cout << "Copy constructor called" << std::endl;
-	//this->name = src.getName();
-	this->grade = src.getGrade();
 }
 
 /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
@@ -65,6 +65,34 @@ void	Bureaucrat::decrementa()throw(GradeTooLowException)
 		throw GradeTooLowException();
 	grade++;
 }
+
+void	Bureaucrat::signForm( Form* src)
+{
+	if (src != NULL)
+	{
+		if (src->getIfSigned() == true)
+		{
+			std::cout << this->getName() << " couldn't signed " << src->getName() << " because " << " alredy signed " << std::endl; 
+			return ;
+		}
+		try
+		{
+			src->beSigned(*this);
+		}
+		catch(const Form::GradeTooLowException& e) 
+		{
+			std::cout << this->getName() << " couldn't signed " << src->getName() << " because " << " GradeTooLow " << std::endl; 
+		}
+		if (src->getIfSigned())
+		{
+			std::cout << this->getName() << " signed " << src->getName() << std::endl; 
+		}
+	}
+	return ;
+}
+	/*<bureaucrat> signed <form>
+	 *<bureaucrat> couldn’t sign <form> because <reason>.
+*/
 
 /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 

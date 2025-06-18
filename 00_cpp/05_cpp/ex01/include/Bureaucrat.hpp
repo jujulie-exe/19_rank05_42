@@ -7,6 +7,9 @@
 #include <cstddef>
 #include <iostream>
 #include <ostream>
+#include "Form.hpp"
+
+class Form;
 
 class Bureaucrat
 {
@@ -40,7 +43,7 @@ class Bureaucrat
 		/*♡♡♡♡♡♡♡♡♡♡♡CLASS♡FT♡♡♡♡♡♡♡♡♡♡♡♡*/
 		void	incrementa( void ) throw(GradeTooHighException);
 		void	decrementa( void ) throw(GradeTooLowException);
-		void	signForm( void );
+		void	signForm( Form* src );
 
 	private:
 		const std::string	name;
