@@ -6,12 +6,13 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:20:05 by jfranco           #+#    #+#             */
-/*   Updated: 2025/06/18 17:53:37 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/06/18 19:28:26 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/Bureaucrat.hpp"
+#include "../include/ShrubberyCreationForm.hpp"
 
 int	main()
 {
@@ -87,46 +88,18 @@ int	main()
 				}
 				y++;
 			}
-		std::cout << *instance2 << std::endl;
-		size_t	f = 0;
-		try
-		{
-			Form *test = new Form("Documento", 1, 100);
-			instance2->signForm(test);
-			while (f < 149)
-			{
-				try
-				{
-					instance2->incrementa();
-				}
-				catch(const Bureaucrat::GradeTooHighException& e) 
-				{
-					std::cout << "Exception: class " << e.what() << std::endl;
-				}
-				catch(const Bureaucrat::GradeTooLowException& e) 
-				{
-					std::cout << "Exception: class " << e.what() << std::endl;
-				}
-				catch(const std::exception& e)
-				{
-					std::cout << "Exception: standard" << e.what() << std::endl;
-				}
-				catch(...)
-				{
-					std::cout << "Altro " << std::endl;
-				}
-				f++;
-			}
-			std::cout << *test << std::endl;
-			std::cout << *instance2 << std::endl;
-			instance2->signForm(test);
-			delete test;
-		}
-		catch(const std::exception& e) 
-		{
-			std::cout << "Exception: class " << e.what() << std::endl;
-		}
 		delete instance2;
+	}
+	ShrubberyCreationForm n1("Mamma");
+	Bureaucrat n2("Giorgio", 1);
+	try
+	{
+		n2.signForm(&n1);
+		n1.execute(n2);
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << "Exception: standard " << e.what() << std::endl;
 	}
 
 }
