@@ -6,100 +6,71 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:20:05 by jfranco           #+#    #+#             */
-/*   Updated: 2025/06/18 19:28:26 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/06/19 18:01:39 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../include/Bureaucrat.hpp"
 #include "../include/ShrubberyCreationForm.hpp"
+#include "../include/RobotomyRequestForm.hpp"
+#include "../include/PresidentialPardonForm.hpp"
+#include "../include/RobotomyRequestForm.hpp"
 
 int	main()
 {
-	size_t	i = 0;
-	size_t y = 0;
-	Bureaucrat* instance2 = NULL;
+	AForm					*FormN1;
+	AForm					*FormN2;
+	AForm					*FormN3;
+	Bureaucrat				*BuroN1;	
+	Bureaucrat				*BuroN2;	
+	Bureaucrat				*BuroN3;	
 	try
 	{
-		instance2 = new Bureaucrat("Mario", 10);
+		FormN1 = new ShrubberyCreationForm("CULO");
+		FormN2 = new PresidentialPardonForm("PARK");
+		FormN3 = new RobotomyRequestForm("WOOD");
 	}
 	catch(const std::exception& e)
 	{
-		std::cout << "Exception: standard " << e.what() << std::endl;
+		std::cout << "ERRORE IN:" << e.what() << std::endl;
 	}
-
 
 	try
 	{
-		Bureaucrat instance1("Charlie", 250);
-		std::cout << instance1 << std::endl;
-		while(i < 200)
-		{
-			try
-			{
-				instance1.incrementa();
-			}
-			catch(const Bureaucrat::GradeTooHighException& e) 
-			{
-				std::cout << "Exception: class " << e.what() << std::endl;
-			}
-			catch(const std::exception& e)
-			{
-				std::cout << "Exception: standard" << e.what() << std::endl;
-			}
-			catch(...)
-			{
-				std::cout << "Altro " << std::endl;
-			}
-			i++;
-		}
-	std::cout << instance1 << std::endl;
-	}
-	catch(const std::exception& e)
-    {
-        std::cout << "Exception: standard " << e.what() << std::endl;
-    }
-
-
-	if (instance2)
-	{
-		std::cout << "Try stamp mario " << *instance2 << std::endl;
-			while(y <= 148)
-			{
-				try
-				{
-					instance2->decrementa();
-				}
-				catch(const Bureaucrat::GradeTooHighException& e) 
-				{
-					std::cout << "Exception: class " << e.what() << std::endl;
-				}
-				catch(const Bureaucrat::GradeTooLowException& e) 
-				{
-					std::cout << "Exception: class " << e.what() << std::endl;
-				}
-				catch(const std::exception& e)
-				{
-					std::cout << "Exception: standard" << e.what() << std::endl;
-				}
-				catch(...)
-				{
-					std::cout << "Altro " << std::endl;
-				}
-				y++;
-			}
-		delete instance2;
-	}
-	ShrubberyCreationForm n1("Mamma");
-	Bureaucrat n2("Giorgio", 1);
-	try
-	{
-		n2.signForm(&n1);
-		n1.execute(n2);
+		BuroN1 = new Bureaucrat("Mario", 150);
+		BuroN2 = new Bureaucrat("Giovanni", 1);
+		BuroN3 = new Bureaucrat("Luca", 150);
 	}
 	catch(const std::exception& e)
 	{
-		std::cout << "Exception: standard " << e.what() << std::endl;
+		std::cout << "ERRORE IN:" << e.what() << std::endl;
 	}
+	BuroN1->signForm(FormN1);
+	BuroN2->signForm(FormN1);
+	BuroN3->signForm(FormN1);
+	BuroN1->signForm(FormN2);
+	BuroN1->signForm(FormN2);
+	BuroN2->signForm(FormN2);
+	BuroN3->signForm(FormN3);
+	BuroN2->signForm(FormN3);
+	BuroN3->signForm(FormN3);
+	BuroN1->executeForm(*FormN1);
+	BuroN2->executeForm(*FormN1);
+	BuroN3->executeForm(*FormN1);
+	BuroN1->executeForm(*FormN2);
+	BuroN1->executeForm(*FormN2);
+	BuroN2->executeForm(*FormN2);
+	BuroN3->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN3->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
+	BuroN2->executeForm(*FormN3);
 
 }

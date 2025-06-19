@@ -13,7 +13,6 @@ class ShrubberyCreationForm : public AForm
        /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
  
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-	   virtual void executeAction( void ) const;
  
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
        ShrubberyCreationForm& operator=(ShrubberyCreationForm const & rsh);    //Cannon
@@ -23,6 +22,8 @@ class ShrubberyCreationForm : public AForm
   private:
 	   const std::string _target;
        ShrubberyCreationForm();  //cannon
+  protected:
+	   virtual void executeAction() const;
 };
 // std::ostream &operator<<(std::ostream &o, const ShrubberyCreationForm &rhs);
 #endif // SHRUBBERYCREATIONFORM_H

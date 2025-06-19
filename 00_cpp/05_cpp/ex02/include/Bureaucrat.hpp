@@ -44,6 +44,7 @@ class Bureaucrat
 		void	incrementa( void ) throw(GradeTooHighException);
 		void	decrementa( void ) throw(GradeTooLowException);
 		void	signForm( AForm* src );
+		void	executeForm(AForm const & form) const;
 
 	private:
 		const std::string	name;

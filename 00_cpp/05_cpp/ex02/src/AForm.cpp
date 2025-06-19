@@ -82,6 +82,7 @@ void		AForm::execute(Bureaucrat const & executor) const throw(GradeTooLowExcepti
 		throw NoSignedExeption();
 	if(this->getExecuteGrade() < executor.getGrade())
 		throw GradeTooLowException();
+	std::cout << executor.getName() << " executed " << this->getName() << std::endl;
 	this->executeAction();
 }
  

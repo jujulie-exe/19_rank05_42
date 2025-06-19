@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:01:43 by jfranco           #+#    #+#             */
-/*   Updated: 2025/06/18 18:58:08 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/06/19 16:27:52 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,26 @@ void	Bureaucrat::signForm( AForm* src)
 	}
 	return ;
 }
-	/*<bureaucrat> signed <form>
+/*
+	 *<bureaucrat> signed <form>
 	 *<bureaucrat> couldn’t sign <form> because <reason>.
 */
+
+void	Bureaucrat::executeForm(AForm const & form) const
+{
+	try
+	{
+		form.execute(*this);
+	}
+	catch(const AForm::GradeTooLowException& e) 
+	{
+		std::cout << this->getName() << " couldn't execute " << form.getName() << " because " << " GradeTooLow " << std::endl; 
+	}
+	catch(const AForm::NoSignedExeption& e) 
+	{
+		std::cout << this->getName() << " couldn't execute " << form.getName() << " because " << " NoSigned " << std::endl; 
+	}
+}
 
 /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 
@@ -100,10 +117,7 @@ Bureaucrat &Bureaucrat::operator=( Bureaucrat const &rhs)
 {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &rhs)
-    {
-		//this->name = rhs->getName();
 		this->grade = rhs.getGrade();
-    }
     return *this;
 }
 

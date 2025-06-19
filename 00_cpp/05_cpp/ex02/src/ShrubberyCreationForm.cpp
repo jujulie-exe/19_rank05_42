@@ -1,6 +1,7 @@
 #include "../include/ShrubberyCreationForm.hpp"
+#include <fstream>
 
-       /*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
+/*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string& targetREF)
 	: AForm("ShrubberyCreationForm", 145, 137), _target( targetREF )
 {
@@ -20,12 +21,24 @@ ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & src)
     //*this = src;
 }
 
-       /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
- 
-       /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
+/*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
+/*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 void	ShrubberyCreationForm::executeAction( void ) const
 {
-	std::cout << "ACTION CALL" << std::endl;
+	std::string filename = this->_target + std::string("_shrubbery");
+	std::ofstream OutFile(filename.c_str());	
+	if(!OutFile)
+	{
+		std::cerr << "can´t open file: " << filename << std::endl;
+		return ;
+	}
+	OutFile << "   /* \n";
+	OutFile << "  /*** \n";
+	OutFile << " /***** \n";
+	OutFile << "/******* \n";
+	OutFile << "  |** \n";
+	OutFile << "  |** \n";
+	OutFile.close();
 }
  
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
