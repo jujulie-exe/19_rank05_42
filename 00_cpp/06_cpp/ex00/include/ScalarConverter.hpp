@@ -1,6 +1,11 @@
 #ifndef SCALARCONVERTER_H
 #define SCALARCONVERTER_H
  
+#include <sstream>
+#include <iostream>
+#include <ostream>
+#include <ctype.h>
+#include <limits>
 class ScalarConverter
 {
    public:
@@ -21,6 +26,11 @@ class ScalarConverter
        /*♡♡♡♡♡♡♡♡♡♡♡DTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
        virtual ~ScalarConverter(); //Cannon
 };
+typedef double (*SpecialFunc)();
+double get_pos_inf();
+double get_neg_inf();
+double get_nan();
+
 // std::ostream &operator<<(std::ostream &o, const ScalarConverter &rhs);
 #endif // SCALARCONVERTER_H
 
