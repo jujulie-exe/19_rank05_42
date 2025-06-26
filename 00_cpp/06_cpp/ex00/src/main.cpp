@@ -17,5 +17,9 @@ int	main(int argc, char **argv)
 	ScalarConverter::convert("nan");
 	ScalarConverter::convert("0");
 	ScalarConverter::convert(".");
+	ScalarConverter::convert("1abcd-inff");
+	ScalarConverter::convert("");
+	ScalarConverter::convert("               ");
+	ScalarConverter::convert("        1       ");
     return 0;
 }

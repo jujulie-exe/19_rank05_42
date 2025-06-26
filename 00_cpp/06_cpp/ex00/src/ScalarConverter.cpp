@@ -58,7 +58,7 @@ static int	getChar(const std::string& ch)
 
 void	ScalarConverter::convert(const std::string& infoREF)
 {
-	if ((static_cast<int>(getDouble(infoREF))) == 0 && infoREF[0] != '0')
+	if ((((static_cast<int>(getDouble(infoREF))) == 0 && infoREF[0] != '0')) || !solve(infoREF) || infoREF.empty())
 	{
 		double d;
 		int i = 0;
