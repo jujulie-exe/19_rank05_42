@@ -68,7 +68,10 @@ void	ScalarConverter::convert(const std::string& infoREF)
 			SpecialFunc funcs[] = { get_pos_inf, get_pos_inf, get_neg_inf, get_neg_inf, get_nan, get_nan };
 			if (info[i] == infoREF)
 			{
-				std::cout << funcs[i]() << std::endl;
+				std::cout << "double: " << funcs[i]() << std::endl;
+				std::cout << "float: " << funcs[i]() << "f" << std::endl;
+				std::cout << "char: impossible" << std::endl;
+				std::cout << "int:  impossible" << std::endl;
 				return ;
 			}
 			i++;
@@ -77,12 +80,15 @@ void	ScalarConverter::convert(const std::string& infoREF)
 		return ;
 	}
 	std::cout << "Double is:{" << std::fixed << std::setprecision(4) << getDouble(infoREF) << "} ";
+	std::cout << std::endl;
 	std::cout << "float is: ["<< std::fixed << std::setprecision(2) << getDouble(infoREF) << "f]";
-	std::cout << " int is: <" << getChar(infoREF) << ">";
+	std::cout << std::endl;
+	std::cout << "int is: <" << getChar(infoREF) << ">";
+	std::cout << std::endl;
 	if( getChar(infoREF) >= 41 && getChar(infoREF) < 128)
-		std::cout << " ASCII: " << (static_cast<char>(getChar(infoREF)));
+		std::cout << "ASCII: " << (static_cast<char>(getChar(infoREF)));
 	else
-		std::cout << " Carratere ascii non disponibile ";
+		std::cout << "char: Non displayable";
 	std::cout << std::endl;
 }
 
