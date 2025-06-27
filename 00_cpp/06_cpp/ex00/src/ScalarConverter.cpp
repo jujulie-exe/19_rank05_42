@@ -15,14 +15,32 @@ double get_nan() {
 }
 
 
-static int solve( std::string s )
+static int solve(const std::string& s )
 {
-   for( int i = 0; i < s.length(); i++ )
+	unsigned int i = 0;
+	int flags = 0;
+	if(s[0] == '-')
+		i = 1;
+   while (i < s.length())
    {
-      if( s[i] != '.' && !std::isdigit( s[i] ))
-         return 0;
+	    if (s[i] == '.')
+        {
+            flags++;
+            if (flags > 1)
+                return 0; // più di un punto
+        }
+		else if (s[i] == 'f')
+		{
+			 if (i != s.length() - 1)
+				return 0;
+		}
+        else if (!std::isdigit(s[i]))
+        {
+            return 0; // carattere non valido
+        }
+		i++;
    }
-   return 1;
+   return (1);
 }
 
 static double	getDouble(const std::string& d)
@@ -58,9 +76,8 @@ static int	getChar(const std::string& ch)
 
 void	ScalarConverter::convert(const std::string& infoREF)
 {
-	if ((((static_cast<int>(getDouble(infoREF))) == 0 && infoREF[0] != '0')) || !solve(infoREF) || infoREF.empty())
+	if ((((static_cast<int>(getDouble(infoREF))) == 0 && infoREF[0] != '0')) || (!solve(infoREF) && infoREF.length() > 1) || infoREF.empty())
 	{
-		double d;
 		int i = 0;
 		std::string info[] = { "+inf", "+inff", "-inf", "-inff" , "nanf", "nan", ""};
 		while (!info[i].empty())
@@ -79,13 +96,13 @@ void	ScalarConverter::convert(const std::string& infoREF)
 		std::cerr << "INVALID STRING" << std::endl;
 		return ;
 	}
-	std::cout << "Double is:{" << std::fixed << std::setprecision(4) << getDouble(infoREF) << "} ";
+	std::cout << "Double is:{" << std::fixed << std::setprecision(5) << getDouble(infoREF) << "} ";
 	std::cout << std::endl;
-	std::cout << "float is: ["<< std::fixed << std::setprecision(2) << getDouble(infoREF) << "f]";
+	std::cout << "float is: [" << std::fixed << std::setprecision(2) << (static_cast<float>(getDouble(infoREF))) << "f]";
 	std::cout << std::endl;
 	std::cout << "int is: <" << getChar(infoREF) << ">";
 	std::cout << std::endl;
-	if( getChar(infoREF) >= 41 && getChar(infoREF) < 128)
+	if( getChar(infoREF) >= 41 && getChar(infoREF) < 127)
 		std::cout << "ASCII: " << (static_cast<char>(getChar(infoREF)));
 	else
 		std::cout << "char: Non displayable";
@@ -110,6 +127,7 @@ ScalarConverter::ScalarConverter()
 
 ScalarConverter::ScalarConverter(ScalarConverter const & src)
 {
+	(void)src;
     std::cout << "Copy constructor called" << std::endl;
     //*this = src;
 }
