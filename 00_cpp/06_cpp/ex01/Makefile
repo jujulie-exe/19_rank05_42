@@ -22,7 +22,8 @@ endif
 
 SRC_DIR = src
 SRCS = $(SRC_DIR)/main.cpp \
-	   $(SRC_DIR)/ScalarConverter.cpp
+	   $(SRC_DIR)/Serializer.cpp \
+	   $(SRC_DIR)/Data.cpp
 
 
 OBJ_DIR = obj
@@ -56,58 +57,6 @@ else ifeq ($(MODE), normal)
 else ifeq ($(MODE), gdb)
 	gdb ./$(NAME)
 endif 
-test: all
-	./$(NAME) 1
-	@echo ""
-	./$(NAME) 100
-	@echo ""
-	./$(NAME) -1000
-	@echo ""
-	./$(NAME) 127
-	@echo ""
-	./$(NAME) 0
-	@echo ""
-	./$(NAME) -inf
-	@echo ""
-	./$(NAME) 102
-	@echo ""
-	./$(NAME) Abcd!
-	@echo ""
-	./$(NAME) 1ab
-	@echo ""
-	./$(NAME) -1ab
-	@echo ""
-	./$(NAME) c
-	@echo ""
-	./$(NAME) x
-	@echo ""
-	./$(NAME) "*"
-	@echo ""
-	./$(NAME) -
-	@echo ""
-	./$(NAME) ....
-	@echo ""
-	./$(NAME) 120...20
-	@echo ""
-	./$(NAME) 100.1024
-	@echo ""
-	./$(NAME) -100.1024
-	@echo ""
-	./$(NAME) 42.0f
-	@echo ""
-	./$(NAME) 42.0a
-	@echo ""
-	./$(NAME) .
-	@echo ""
-	./$(NAME) ffff
-	@echo ""
-	./$(NAME) abcf
-	@echo ""
-	./$(NAME) 120ffff
-	@echo ""
-	./$(NAME) 90.f
-	@echo ""
-	./$(NAME) 90.
 
 
 
