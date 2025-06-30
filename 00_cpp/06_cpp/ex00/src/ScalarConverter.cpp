@@ -58,10 +58,10 @@ static double	getDouble(const std::string& d)
 	return db;
 }
 
-static int	getChar(const std::string& ch)
+static long long	getChar(const std::string& ch)
 {
 	char c;
-	int n;
+	long long n;
 	std::stringstream ss(ch);
 
 	if (ch.size() == 1 && !std::isdigit( ch[0]))
@@ -71,9 +71,9 @@ static int	getChar(const std::string& ch)
 		ss >> n;
 		return n;
 	}
-	return (static_cast<int>(c));
+	return (static_cast<long long>(c));
 }
-
+#include <limits.h>
 void	ScalarConverter::convert(const std::string& infoREF)
 {
 	if ((((static_cast<int>(getDouble(infoREF))) == 0 && infoREF[0] != '0')) || (!solve(infoREF) && infoREF.length() > 1) || infoREF.empty())
@@ -96,16 +96,22 @@ void	ScalarConverter::convert(const std::string& infoREF)
 		std::cerr << "INVALID STRING" << std::endl;
 		return ;
 	}
-	std::cout << "Double is:{" << std::fixed << std::setprecision(5) << getDouble(infoREF) << "} ";
-	std::cout << std::endl;
-	std::cout << "float is: [" << std::fixed << std::setprecision(2) << (static_cast<float>(getDouble(infoREF))) << "f]";
-	std::cout << std::endl;
-	std::cout << "int is: <" << getChar(infoREF) << ">";
-	std::cout << std::endl;
-	if( getChar(infoREF) >= 41 && getChar(infoREF) < 127)
+	if(std::isprint(static_cast<char>(getChar(infoREF))))
 		std::cout << "ASCII: " << (static_cast<char>(getChar(infoREF)));
 	else
 		std::cout << "char: Non displayable";
+	std::cout << std::endl;
+	if(getChar(infoREF) <= INT_MAX && getChar(infoREF) >= INT_MIN)
+		std::cout << "int is: <" << getChar(infoREF) << ">";
+	else
+		std::cout << "int is: <" << "impossible" << ">";
+	std::cout << std::endl;
+	if (getDouble(infoREF) < static_cast<double>(1 << 24) && getDouble(infoREF) > static_cast<double>(-(1 << 24)))
+		std::cout << "float is: [" << std::fixed << std::setprecision(1) << (static_cast<float>(getDouble(infoREF))) << "f]";
+	else
+		std::cout << "float is: <" << "impossible" << ">";
+	std::cout << std::endl;
+	std::cout << "Double is:{" << std::fixed << std::setprecision(1) << getDouble(infoREF) << "} ";
 	std::cout << std::endl;
 }
 
