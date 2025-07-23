@@ -2,7 +2,7 @@
 
        /*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 template < typename T >
-Array<T>::Array(unsigned long size)
+Array<T>::Array(size_t size)
 	: _size(size)
 {
 	if (_size > 0)
@@ -50,6 +50,16 @@ template < typename T >
 T &Array<T>::operator[](int index)
 {
 	if (index < 0 || static_cast<size_t>(index) >= _size || _array == NULL)
+	{
+		throw IndexNotAllow();
+	}
+	return this->_array[index];
+}
+
+template < typename T >
+T &Array<T>::operator[](size_t index)
+{
+	if (static_cast<size_t>(index) >= _size || _array == NULL)
 	{
 		throw IndexNotAllow();
 	}

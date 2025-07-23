@@ -9,7 +9,7 @@ class Array
    public:
        /*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
        Array();  //cannon
-       Array(unsigned long index);  //cannon
+       Array(size_t index);  //cannon
        Array(Array const & src);   //Cannon
  
        /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
@@ -19,6 +19,7 @@ class Array
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
        Array<T>& operator=(Array<T> const & rsh);    //Cannon
        T& operator[](int index);
+       T& operator[](size_t index);
 
 	   class IndexNotAllow : public std::exception
 		{
