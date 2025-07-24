@@ -36,6 +36,7 @@ Array<T> &Array<T>::operator=( Array<T> const &rhs)
 		{
 			delete [] this->_array;
 		}
+		this->_size = rhs._size;
 		this->_array = new T[rhs._size];
 		for (size_t i = 0; i < rhs._size; ++i){
 			this->_array[i] = rhs._array[i];
