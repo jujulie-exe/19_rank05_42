@@ -5,10 +5,7 @@ template < typename T >
 Array<T>::Array(size_t size)
 	: _size(size)
 {
-	if (_size > 0)
-		this->_array = new T[size];
-	else 
-		this->_array = NULL;
+	this->_array = new T[size];
 }
 
 template < typename T >
