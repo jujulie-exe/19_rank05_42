@@ -18,8 +18,10 @@ class Array
  
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
        Array<T>& operator=(Array<T> const & rsh);    //Cannon
+       const T& operator[](int index) const;
        T& operator[](int index);
        T& operator[](size_t index);
+       const T& operator[](size_t index) const;
 
 	   class IndexNotAllow : public std::exception
 		{

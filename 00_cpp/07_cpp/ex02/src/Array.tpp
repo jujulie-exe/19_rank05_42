@@ -45,6 +45,15 @@ Array<T> &Array<T>::operator=( Array<T> const &rhs)
     return *this;
 }
 template < typename T >
+const T &Array<T>::operator[](int index) const
+{
+	if (index < 0 || static_cast<size_t>(index) >= _size || _array == NULL)
+	{
+		throw IndexNotAllow();
+	}
+	return this->_array[index];
+}
+template < typename T >
 T &Array<T>::operator[](int index)
 {
 	if (index < 0 || static_cast<size_t>(index) >= _size || _array == NULL)
@@ -55,7 +64,7 @@ T &Array<T>::operator[](int index)
 }
 
 template < typename T >
-T &Array<T>::operator[](size_t index)
+const T &Array<T>::operator[](size_t index) const
 {
 	if (static_cast<size_t>(index) >= _size || _array == NULL)
 	{

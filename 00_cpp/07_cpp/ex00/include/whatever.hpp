@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 17:30:58 by jfranco           #+#    #+#             */
-/*   Updated: 2025/07/21 17:45:07 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/07/24 14:43:43 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef WHATEVER_HPP
@@ -15,7 +15,7 @@
 template <typename T>
 T max(T x, T y)
 {
-	if (x >= y)
+	if (x > y)
 		return (x);
 	else
 		return (y);
@@ -24,7 +24,7 @@ T max(T x, T y)
 template <typename T>
 T min(T x, T y)
 {
-	if (x <= y)
+	if (x < y)
 		return (x);
 	else
 		return (y);

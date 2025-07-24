@@ -47,6 +47,19 @@ int main(int, char**)
         std::cerr << e.what() << '\n';
     }
 
+    const Array<int> ConstNumber(MAX_VAL);
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+		try
+		{
+			std::cout << ConstNumber[i] << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+		    std::cerr << e.what() << '\n';
+			break ;
+		}
+    }
     for (int i = 0; i < MAX_VAL; i++)
     {
         numbers[i] = rand();
