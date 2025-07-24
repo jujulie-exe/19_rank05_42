@@ -64,6 +64,16 @@ T &Array<T>::operator[](int index)
 }
 
 template < typename T >
+T &Array<T>::operator[](size_t index)
+{
+	if (static_cast<size_t>(index) >= _size || _array == NULL)
+	{
+		throw IndexNotAllow();
+	}
+	return this->_array[index];
+}
+
+template < typename T >
 const T &Array<T>::operator[](size_t index) const
 {
 	if (static_cast<size_t>(index) >= _size || _array == NULL)
