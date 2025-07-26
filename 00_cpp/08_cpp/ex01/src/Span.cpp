@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:46:09 by jfranco           #+#    #+#             */
-/*   Updated: 2025/07/26 18:23:40 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/07/26 18:46:53 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
        /*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 Span::Span(unsigned int size)
-	: _size(size), _MaxDistance(0), _MinDistance(LLONG_MAX), _InterIndex(0)
+	: _size(size), _MaxDistance(0), _MinDistance(LLONG_MAX), _InterIndex(0), _SpanCal(false)
 {
 	this->_array = new int[_size];
 	if (_size > 0)
@@ -33,7 +33,7 @@ Span::Span()
 }
 
 Span::Span(Span const & src)
-	: _size (src._size), _MaxDistance(src._MaxDistance), _MinDistance(src._MinDistance), _InterIndex(src._InterIndex)
+	: _size (src._size), _MaxDistance(src._MaxDistance), _MinDistance(src._MinDistance), _InterIndex(src._InterIndex), _SpanCal(src._SpanCal)
 {
     std::cout << "Copy constructor called" << std::endl;
 	this->_array = new int[_size];
@@ -50,23 +50,25 @@ Span::Span(Span const & src)
        /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 size_t	Span::shortestSpan( void )
 {
-	if (_MinDistance == LLONG_MAX)
+	if (_SpanCal != true)
 	{
 		searchSpan();
-		if (_MinDistance == LLONG_MAX)
-			throw NoSpan();
+		this->_SpanCal = true;
 	}
+	if (_MinDistance == LLONG_MAX)
+		throw NoSpan();
 	return _MinDistance;
 }
 
 size_t	Span::longestSpan( void )
 {
-	if (_MaxDistance == 0)
+	if (_SpanCal != true)
 	{
 		searchSpan();
-		if (_MinDistance == 0)
-			throw NoSpan();
+		this->_SpanCal = true;
 	}
+	if (_MaxDistance == 0)
+		throw NoSpan();
 	return _MaxDistance;
 }
  
@@ -99,6 +101,7 @@ void	Span::addNumber( int nbr )
 	if (_InterIndex < _size )
 	{
 		this->_array[_InterIndex] = nbr;
+		this->_SpanCal = false;
 		_InterIndex++;
 	}
 	else
@@ -113,7 +116,18 @@ Span &Span::operator=( Span const &rhs)
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &rhs)
     {
-        // this->_n = rhs.getValue();
+		this->_size = rhs._size;
+		this->_MaxDistance = rhs._MaxDistance;
+		this->_MinDistance = rhs._MinDistance;
+		this->_InterIndex = rhs._InterIndex;
+		if (this->_array != NULL)
+		{
+			delete [] this->_array;
+		}
+		for (size_t i = 0; i < _size; ++i)
+		{
+			this->_array[i] = rhs._array[i];
+		}
     }
     return *this;
 }

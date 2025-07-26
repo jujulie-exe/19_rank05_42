@@ -35,6 +35,7 @@ class Span
 		ssize_t		_MaxDistance;
 		size_t		_MinDistance;
 		size_t		_InterIndex;
+		bool		_SpanCal;
 
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 	   void	searchSpan( void );
