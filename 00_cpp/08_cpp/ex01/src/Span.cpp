@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:46:09 by jfranco           #+#    #+#             */
-/*   Updated: 2025/07/26 18:46:53 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/07/26 19:00:16 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	Span::searchSpan( void )
 	 if (_InterIndex <= 1) 
 		 return;
 	long long diff ;
+	_MaxDistance = 0;
+	_MinDistance = LLONG_MAX;
 	for (size_t i = 0; i < _InterIndex; ++i)
 	{
 		for (size_t y = 0; y < _InterIndex; ++y)
@@ -120,10 +122,12 @@ Span &Span::operator=( Span const &rhs)
 		this->_MaxDistance = rhs._MaxDistance;
 		this->_MinDistance = rhs._MinDistance;
 		this->_InterIndex = rhs._InterIndex;
+		this->_SpanCal = rhs._SpanCal;
 		if (this->_array != NULL)
 		{
 			delete [] this->_array;
 		}
+		this->_array = new int[_size];
 		for (size_t i = 0; i < _size; ++i)
 		{
 			this->_array[i] = rhs._array[i];
