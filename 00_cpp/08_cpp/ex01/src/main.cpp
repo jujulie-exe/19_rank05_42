@@ -59,8 +59,11 @@ void	TestOverFlows( void )
 }
 int main()  
 {  
+	std::cout << "Test int MAX \n";
 	TestOverFlows();
+	std::cout << "Test Exeption \n";
 	TestExeption();
+	std::cout << "Test MaxAlloc \n";
 	MaxAlloc();
     return 0;  
 }
