@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:46:09 by jfranco           #+#    #+#             */
-/*   Updated: 2025/07/26 19:00:16 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/07/29 16:28:42 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,9 @@ Span::Span()
 }
 
 Span::Span(Span const & src)
-	: _size (src._size), _MaxDistance(src._MaxDistance), _MinDistance(src._MinDistance), _InterIndex(src._InterIndex), _SpanCal(src._SpanCal)
+	: _size (src._size), _MaxDistance(src._MaxDistance), _MinDistance(src._MinDistance), _InterIndex(src._InterIndex), _SpanCal(src._SpanCal), VecInt(src.VecInt), TestSet(src.TestSet)
 {
     std::cout << "Copy constructor called" << std::endl;
-	this->_array = new int[_size];
-	if (_size > 0)
-	{
-		for (size_t i = 0; i < _size; ++i)
-		{
-			this->_array[i] = src._array[i];
-		}
-	}
 
 }
 
@@ -80,29 +72,37 @@ void	Span::searchSpan( void )
 	long long diff ;
 	_MaxDistance = 0;
 	_MinDistance = LLONG_MAX;
-	for (size_t i = 0; i < _InterIndex; ++i)
+	std::vector<int>::iterator it = VecInt.begin();
+	while (it != VecInt.end())
 	{
-		for (size_t y = 0; y < _InterIndex; ++y)
+		TestSet.insert(*it);
+		++it;
+	}
+	if (TestSet.size() > 1)
+	{
+		std::set<int>::iterator itSetBeg = TestSet.begin();
+		std::set<int>::iterator itEnd = TestSet.end();
+		std::set<int>::iterator itSetAf = TestSet.begin();
+		itEnd--;
+		_MaxDistance = std::llabs(static_cast<long long>(*itSetBeg) - static_cast<long long>(*itEnd));
+		while (itSetBeg != TestSet.end())
 		{
-			diff = std::llabs((long long)this->_array[i] - (long long)this->_array[y]);
-			if ( diff > static_cast<long long>(_MaxDistance) && diff != 0)
-			{
-				_MaxDistance = diff;
-			}
+			diff = std::labs(static_cast<long long>(*itSetAf )- static_cast<long long>(*itSetBeg));
 			if (diff < static_cast<long long>(_MinDistance) && diff != 0)
 			{
 				_MinDistance = diff;
 			}
+			itSetAf = itSetBeg;
+			++itSetBeg;
 		}
 	}
-	//std::cout << "diff = " << diff << ", _MinDistance = " << _MinDistance << std::endl;
 }
 
 void	Span::addNumber( int nbr )
 {
 	if (_InterIndex < _size )
 	{
-		this->_array[_InterIndex] = nbr;
+		this->VecInt.push_back(nbr);
 		this->_SpanCal = false;
 		_InterIndex++;
 	}
@@ -123,15 +123,8 @@ Span &Span::operator=( Span const &rhs)
 		this->_MinDistance = rhs._MinDistance;
 		this->_InterIndex = rhs._InterIndex;
 		this->_SpanCal = rhs._SpanCal;
-		if (this->_array != NULL)
-		{
-			delete [] this->_array;
-		}
-		this->_array = new int[_size];
-		for (size_t i = 0; i < _size; ++i)
-		{
-			this->_array[i] = rhs._array[i];
-		}
+		this->VecInt = rhs.VecInt;
+		this->TestSet = rhs.TestSet;
     }
     return *this;
 }
@@ -140,7 +133,6 @@ Span &Span::operator=( Span const &rhs)
 Span::~Span()
 {
     std::cout << "Destructor called" << std::endl;
-	delete[] this->_array;
     // dtor
 }
 

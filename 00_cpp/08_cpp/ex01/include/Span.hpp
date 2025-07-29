@@ -5,6 +5,10 @@
 #include <ostream>
 #include <limits.h>
 #include <unistd.h>
+#include <vector>
+#include <algorithm>
+#include <set>
+#include <iterator>
 #define SSIZE_MIN (-SSIZE_MAX - 1)
  
 class Span
@@ -32,6 +36,8 @@ class Span
        /*♡♡♡♡♡♡♡♡♡♡♡VARIABLE♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 		unsigned int _size;
 		int			*_array;
+		std::vector<int> VecInt;
+		std::set<int>	TestSet;
 		ssize_t		_MaxDistance;
 		size_t		_MinDistance;
 		size_t		_InterIndex;
