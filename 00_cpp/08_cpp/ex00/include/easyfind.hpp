@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <list>
+#include <algorithm>
 template < typename T >
 void printFind(typename T::const_iterator it, const T& continer)
 {
@@ -17,14 +18,7 @@ void printFind(typename T::const_iterator it, const T& continer)
 template < typename T >
 typename T::const_iterator easyfind( const T& continer, int find)
 {
-	typename T::const_iterator it = continer.begin();
-	while (it != continer.end())
-	{
-		if ( *it == find )
-			return it;
-		++it;
-	}
-	return continer.end();
+	return std::find(continer.begin(), continer.end(), find);
 }
 
 #endif

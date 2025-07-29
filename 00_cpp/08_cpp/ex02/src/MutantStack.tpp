@@ -39,6 +39,7 @@ MutantStack<T, container> &MutantStack<T, container>::operator=( MutantStack<T, 
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &rhs)
     {
+		this->c = rhs.c;
     }
     return *this;
 }

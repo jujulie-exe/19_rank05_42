@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:46:09 by jfranco           #+#    #+#             */
-/*   Updated: 2025/07/29 16:28:42 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/07/29 18:20:31 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@
 Span::Span(unsigned int size)
 	: _size(size), _MaxDistance(0), _MinDistance(LLONG_MAX), _InterIndex(0), _SpanCal(false)
 {
-	this->_array = new int[_size];
-	if (_size > 0)
-	{
-		for (size_t i = 0; i < _size; ++i)
-		{
-			_array[i] = 0;
-		}
-	}
 }
 
 Span::Span()
@@ -33,7 +25,7 @@ Span::Span()
 }
 
 Span::Span(Span const & src)
-	: _size (src._size), _MaxDistance(src._MaxDistance), _MinDistance(src._MinDistance), _InterIndex(src._InterIndex), _SpanCal(src._SpanCal), VecInt(src.VecInt), TestSet(src.TestSet)
+	: _size (src._size), _MaxDistance(src._MaxDistance), _MinDistance(src._MinDistance), _InterIndex(src._InterIndex), _SpanCal(src._SpanCal), _VecInt(src._VecInt), _CopyKeyValue(src._CopyKeyValue)
 {
     std::cout << "Copy constructor called" << std::endl;
 
@@ -72,20 +64,20 @@ void	Span::searchSpan( void )
 	long long diff ;
 	_MaxDistance = 0;
 	_MinDistance = LLONG_MAX;
-	std::vector<int>::iterator it = VecInt.begin();
-	while (it != VecInt.end())
+	std::vector<int>::iterator it = _VecInt.begin();
+	while (it != _VecInt.end())
 	{
-		TestSet.insert(*it);
+		_CopyKeyValue.insert(*it);
 		++it;
 	}
-	if (TestSet.size() > 1)
+	if (_CopyKeyValue.size() > 1)
 	{
-		std::set<int>::iterator itSetBeg = TestSet.begin();
-		std::set<int>::iterator itEnd = TestSet.end();
-		std::set<int>::iterator itSetAf = TestSet.begin();
+		std::set<int>::iterator itSetBeg = _CopyKeyValue.begin();
+		std::set<int>::iterator itEnd = _CopyKeyValue.end();
+		std::set<int>::iterator itSetAf = _CopyKeyValue.begin();
 		itEnd--;
 		_MaxDistance = std::llabs(static_cast<long long>(*itSetBeg) - static_cast<long long>(*itEnd));
-		while (itSetBeg != TestSet.end())
+		while (itSetBeg != _CopyKeyValue.end())
 		{
 			diff = std::labs(static_cast<long long>(*itSetAf )- static_cast<long long>(*itSetBeg));
 			if (diff < static_cast<long long>(_MinDistance) && diff != 0)
@@ -102,7 +94,7 @@ void	Span::addNumber( int nbr )
 {
 	if (_InterIndex < _size )
 	{
-		this->VecInt.push_back(nbr);
+		this->_VecInt.push_back(nbr);
 		this->_SpanCal = false;
 		_InterIndex++;
 	}
@@ -123,8 +115,8 @@ Span &Span::operator=( Span const &rhs)
 		this->_MinDistance = rhs._MinDistance;
 		this->_InterIndex = rhs._InterIndex;
 		this->_SpanCal = rhs._SpanCal;
-		this->VecInt = rhs.VecInt;
-		this->TestSet = rhs.TestSet;
+		this->_VecInt = rhs._VecInt;
+		this->_CopyKeyValue = rhs._CopyKeyValue;
     }
     return *this;
 }

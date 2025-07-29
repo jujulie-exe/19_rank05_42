@@ -34,14 +34,13 @@ class Span
        Span();  //cannon
 				
        /*♡♡♡♡♡♡♡♡♡♡♡VARIABLE♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-		unsigned int _size;
-		int			*_array;
-		std::vector<int> VecInt;
-		std::set<int>	TestSet;
-		ssize_t		_MaxDistance;
-		size_t		_MinDistance;
-		size_t		_InterIndex;
-		bool		_SpanCal;
+		unsigned int		_size;
+		size_t				_MaxDistance;
+		size_t				_MinDistance;
+		size_t				_InterIndex;
+		bool			  	_SpanCal;
+		std::vector<int>	_VecInt;
+		std::set<int>		_CopyKeyValue;
 
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 	   void	searchSpan( void );

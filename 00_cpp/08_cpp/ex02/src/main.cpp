@@ -1,6 +1,25 @@
 
 
 #include "../include/MutantStack.hpp"
+void	testCopy( void )
+{
+	MutantStack<std::string, std::vector<std::string> > mstack;
+	mstack.push("Hello");
+	mstack.push("word");
+	mstack.push("save");
+	mstack.push("me");
+	mstack.push("pls");
+	MutantStack<std::string, std::vector<std::string> >	tmp;
+	tmp = mstack;
+	MutantStack<std::string, std::vector<std::string> >::iterator it = tmp.begin();
+	while (it != tmp.end())
+	{
+		std::cout << *it << " ";
+		++it;
+	}
+	std::cout << "\n\n";
+}
+
 void	vectorContainer( void )
 {
 	MutantStack<std::string, std::vector<std::string> > mstack;
@@ -68,5 +87,6 @@ int main()
 	deffContainer();
 	listContainer();
 	vectorContainer();
+	testCopy();
 	return 0;
 }
