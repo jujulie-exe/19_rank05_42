@@ -1,12 +1,20 @@
 #ifndef RPN_H
 #define RPN_H
+#include <iostream>
+#include <ostream>
+#include <stack>
+#include <list>
+#include <limits.h>
+#include <string>
+#include <exception>
+#include <sstream>
  
 class RPN
 {
 	typedef int (RPN::*ftOperator)(int, int) const;
    public:
        /*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-	   RPN(const str::string* & args, size_t size);
+	   RPN(const std::string*  args, size_t size);
  
        /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
  
@@ -24,8 +32,6 @@ class RPN
 
        /*♡♡♡♡♡♡♡♡♡♡♡VARIABLE♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 	   std::stack<int, std::list<int> >	operandi;
-	   result int;
-	   char *_operatori[4];
 	   //void (Validator::* _FunPTR[12])(std::vector<std::string>&);
 	   ftOperator _arrayFToperator[4];
 	   int _result;
@@ -33,7 +39,7 @@ class RPN
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 		void executeRPN(const std::string* args, const size_t size);
 		bool miniParser(const std::string* args, const size_t size) const;
-		void Operation( const char *oprt);
+		void Operation( const char oprt);
 
        /*♡♡♡♡♡♡♡♡♡♡♡UTILITY♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 	   int sum(int nbr1, int nbr2) const;
