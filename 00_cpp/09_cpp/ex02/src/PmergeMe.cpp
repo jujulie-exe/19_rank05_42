@@ -46,34 +46,82 @@ void PmergeMe::printList(std::list<int>::const_iterator begin, std::list<int>::c
         ++begin;
     }
 }
+#include <algorithm>
  
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-void PmergeMe::pairList( size_t matriX, std::list<int>::iterator index)
+static std::list<int>::iterator& max(std::list<int>::iterator & it1, std::list<int>::iterator& it2 )
 {
-	static std::list<int> tmp;
-	std::list<int>::iterator start = index;
-	index++;
-	if (start == this->_c[matriX].end() || index == this->_c[matriX].end())
-	{
-		this->_c.push_back(tmp);
-		tmp.clear();
-		if (this->_c[matriX].size()  == 2)
-			return ;
-		pairList(matriX + 1, this->_c[matriX].begin());
-		return ;
-	} //riampiazzare con un funzione max
-	if (*start > *index)
-	{
-		tmp.push_back(*start);
-		this->_c[matriX].remove(*start);
-	}
+	if (*it1 > *it2)
+		return it1;
 	else
-	{
-		tmp.push_back(*index);
-		this->_c[matriX].remove(*index);
-	}
-	pairList(matriX, start++);
+		return it2;
 }
+
+static std::list<int>::iterator& min(std::list<int>::iterator & it1, std::list<int>::iterator& it2 )
+{
+	if (*it1 > *it2)
+		return it2;
+	else
+		return it1;
+}
+static int JacobsthalRECU(int n)
+{
+    if (n == 0)
+        return 0;
+    if (n == 1)
+        return 1;
+    return Jacobsthal(n - 1) + 2 * Jacobsthal(n - 2);
+}
+
+std::set<int>	PmergeMe::Jacobsthal(size_t maxNbr)
+{
+	std::set<int> tmp;
+	int result = -1;
+	int index = 0;
+	while (result <= maxNbr)
+	{
+		resutl = JacobsthalRECU(index);
+		if (result <= static_cast<int>(maxNbr))
+			tmp.insert(result);
+		index++;
+	}
+	return tmp;
+}
+
+#include <algorithm>    // std::sort
+void PmergeMe::pairList( size_t matriX, std::list<int>::iterator it1)
+{
+	static std::list<int> tmpMax;
+	static std::list<int> tmpMin;
+	std::list<int>::iterator it2 = it1;
+	if (this->_c[matriX].size() == 1)
+		return ;
+	it2++;
+	if (it1 == this->_c[matriX].end() || it2 == this->_c[matriX].end())
+	{
+		this->_c[matriX].clear();
+		this->_c[matriX].swap(tmpMin);
+		if (it1 != this->_c[matriX].end())
+			tmpMax.push_back(*it1);
+		tmpMax.sort();
+		this->_c.push_back(tmpMax);
+		tmpMax.clear();
+		pairList(matriX + 1, this->_c[matriX + 1].begin());
+		return ;
+	}
+	tmpMax.push_back(*(max(it1, it2)));
+	tmpMin.push_back(*(min(it1, it2)));
+	it2++;
+	pairList(matriX, it2);
+}
+
+void PmergeMe::executeSort(void)
+{
+	std::set<int> JacobList = Jacobsthal(this->_c[0].size());
+	//TODO confronto;
+	this->_c.erase(this->_c.begin())
+}
+
  
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 PmergeMe &PmergeMe::operator=( PmergeMe const &rhs)

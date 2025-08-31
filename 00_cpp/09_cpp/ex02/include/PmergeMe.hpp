@@ -24,7 +24,7 @@ class PmergeMe
 	   std::list<int>::iterator	getStart( void );
  
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-		void pairList( size_t matriX, std::list<int>::iterator index);
+		void pairList( size_t matriX, std::list<int>::iterator it1);
  
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
        PmergeMe& operator=(PmergeMe const & rsh);    //Cannon
