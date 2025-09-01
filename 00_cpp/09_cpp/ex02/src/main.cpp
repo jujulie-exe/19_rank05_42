@@ -12,14 +12,44 @@
 
 #include "../include/PmergeMe.hpp"
 
-int main()
+int main(int argc, char **argv)
 {
-	std::string args[10]= {"2", "6", "15", "9", "4", "1", "7", "5", "3", "100"};
-	size_t size = 10;
-	PmergeMe instance(args, size);
-	instance.printTreeList();
+	std::string* prmtrs;
+	size_t	size;
+	if (argc > 2)
+	{
+		prmtrs = new std::string[argc - 1];
+		char **Cpy = argv + 1;
+		size = argc - 1;
+		for (size_t i = 0; i < argc - 1; ++i)
+		{
+			prmtrs[i] = std::string(Cpy[i]);
+		}
+	}
+	else
+		return (0);
+	PmergeMe instance(prmtrs, size);
+	clock_t init = clock();
 	instance.pairList(0, instance.getStart());
+	for (size_t i = 0; instance.getSize() != 1; ++i){
+		instance.executeSortList();
+	}
+
+	clock_t end = clock();
+	std::cout << ((float)(end - init)) *1000 / (CLOCKS_PER_SEC) << "\n";
+	std::cout << "List short: " << "\n";
 	instance.printTreeList();
+	init = clock();
+	instance.pairDeque(0, instance.getStartDeque());
+	for (size_t i =0; instance.getSizeDeque() != 1; ++i)
+	{
+		instance.executeSortDeque();
+	}
+	end = clock();
+	std::cout << ((float)(end - init)) *1000 / (CLOCKS_PER_SEC) << "\n";
+	std::cout << "Deque short: " << "\n";
+	instance.printTreeDeque();
+	delete[] prmtrs;
 
 	return (0);
 }
