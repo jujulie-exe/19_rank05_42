@@ -138,7 +138,6 @@ void PmergeMe::pairList( size_t matriX, std::list<int>::iterator it1)
 			tmpMax.push_back(*it1);
 		this->_c[matriX].clear();
 		this->_c[matriX].swap(tmpMin);
-		tmpMax.sort();
 		this->_c.push_back(tmpMax);
 		tmpMax.clear();
 		pairList(matriX + 1, this->_c[matriX + 1].begin());
@@ -164,7 +163,6 @@ void PmergeMe::pairDeque( size_t matriX, std::deque<int>::iterator it1)
 			tmpMax.push_back(*it1);
 		this->_d[matriX].clear();
 		this->_d[matriX].swap(tmpMin);
-		std::sort(tmpMax.begin(), tmpMax.end());
 		this->_d.push_back(tmpMax);
 		tmpMax.clear();
 		pairDeque(matriX + 1, this->_d[matriX + 1].begin());
