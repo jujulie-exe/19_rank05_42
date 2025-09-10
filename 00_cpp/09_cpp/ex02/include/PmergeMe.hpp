@@ -1,6 +1,12 @@
 #ifndef PMERGEME_H
 #define PMERGEME_H
- 
+#include <iostream>
+#include <ostream>
+#include <string>
+#include <vector>
+#include <vector>  
+#include <set>
+
 class PmergeMe
 {
    public:
@@ -12,7 +18,7 @@ class PmergeMe
 	   size_t getNumberCmp( void ) const;
  
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-	   void	Ford-JohnsonVector(std::vector<int> &vecREF);
+	   void	FordJohnsonVector(std::vector<int> &vecREF, size_t pairSize);
 
  
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
@@ -21,8 +27,11 @@ class PmergeMe
        /*♡♡♡♡♡♡♡♡♡♡♡DTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
        virtual ~PmergeMe(); //Cannon
   private:
-	   cmp(int a, int b);
-	   size_t cmp;
+	    bool ft_cmp(int a, int b);
+	   std::set<int>	Jacobsthal(size_t maxNbr);
+		size_t cmp;
+	void	binaryInsertGroup(std::vector<int>& mainChain, const std::vector<int>& group, size_t SizePairs);
+	void	printVec(std::vector<int> t) const;
 };
 // std::ostream &operator<<(std::ostream &o, const PmergeMe &rhs);
 #endif // PMERGEME_H

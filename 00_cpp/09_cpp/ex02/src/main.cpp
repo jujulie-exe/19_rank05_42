@@ -12,45 +12,27 @@
 
 #include "../include/PmergeMe.hpp"
 
-int main(int argc, char **argv)
+int main()
 {
-	std::string* prmtrs;
-	size_t	size;
-	if (argc > 2)
+	std::vector<int> test;
+	for (size_t i = 10; i != 0 ; --i)
 	{
-		prmtrs = new std::string[argc - 1];
-		char **Cpy = argv + 1;
-		size = argc - 1;
-		for (int i = 0; i < argc - 1; ++i)
-		{
-			prmtrs[i] = std::string(Cpy[i]);
-		}
+		test.push_back(i);
 	}
-	else
-		return (0);
-	PmergeMe instance(prmtrs, size);
-	std::cout << "Before: ";
-	instance.printTreeList();
+	for (size_t i = 0; i < test.size(); ++i)
+	{
+		std::cout << test[i] << " ";
+	}
+	PmergeMe instance;
 	clock_t init = clock();
-	instance.pairList(0, instance.getStart());
-	for (size_t i = 0; instance.getSize() != 1; ++i){
-		instance.executeSortList();
-	}
+	instance.FordJohnsonVector(test, 1);
 	clock_t end = clock();
 	std::cout << "Time to process a range of"  << ((float)(end - init)) *1000 / (CLOCKS_PER_SEC) << " whit: std::list \n";
 	std::cout << "After: ";
-	instance.printTreeList();
-	init = clock();
-	instance.pairDeque(0, instance.getStartDeque());
-	for (size_t i =0; instance.getSizeDeque() != 1; ++i)
+	for (size_t i = 0; i < test.size(); ++i)
 	{
-		instance.executeSortDeque();
+		std::cout << test[i] << " ";
 	}
-	end = clock();
-	std::cout << "Time to process a range of"  << ((float)(end - init)) *1000 / (CLOCKS_PER_SEC) << " whit: std::dque \n";
-	std::cout << "After: ";
-	instance.printTreeDeque();
-	delete[] prmtrs;
 
 	return (0);
 }
