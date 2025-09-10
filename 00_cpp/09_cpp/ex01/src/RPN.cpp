@@ -125,6 +125,10 @@ int	RPN::min(int nbr1, int nbr2) const
 
 int	RPN::div(int nbr1, int nbr2) const
 {
+	if (nbr2 == 0)
+	{
+		throw internalErrorRPN();
+	}
 	return (nbr1 / nbr2);
 }
 
