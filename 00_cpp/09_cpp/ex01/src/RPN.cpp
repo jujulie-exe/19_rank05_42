@@ -24,6 +24,7 @@ RPN::RPN()
 RPN::RPN(RPN const & src)
 {
     std::cout << "Copy constructor called" << std::endl;
+	(void)src;
     //*this = src;
 }
 

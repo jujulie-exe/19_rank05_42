@@ -10,6 +10,7 @@ BitcoinExchange::BitcoinExchange()
 BitcoinExchange::BitcoinExchange(BitcoinExchange const & src)
 {
     std::cout << "Copy constructor called" << std::endl;
+	(void)src;
     //*this = src;
 }
 
@@ -46,9 +47,10 @@ static bool CheckFileStream(std::ifstream& file, const std::string& filename)
         return false;
     }
 
-    if (file.good())
+    if (file.good()){
         std::cout << "File stream is valid: " << filename;
-	std::cout << "\n\n";
+		std::cout << "\n\n";
+	}
     return true;
 }
 static	void	trimSpace(std::string& tmp)
@@ -186,7 +188,7 @@ int	BitcoinExchange::stringParserINP(std::string const & strREF, std::string spr
 		{
 			return -1;
 		}
-		std::tm info = {0};
+		std::tm info = {};
 		info.tm_year = static_cast<int>(StringConvert( tmp.substr(0, 4) ) - 1900);
 		info.tm_mon = static_cast<int>(StringConvert( tmp.substr(5, 2)   ) - 1);
 		info.tm_mday = static_cast<int>(StringConvert( tmp.substr(8, 2)));
@@ -250,7 +252,7 @@ bool	BitcoinExchange::stringParserDB(std::string const & strREF, std::string spr
 		{
 			return false;
 		}
-		std::tm info = {0};
+		std::tm info = {};
 		info.tm_year = static_cast<int>(StringConvert( tmp.substr(0, 4) ) - 1900);
 		info.tm_mon = static_cast<int>(StringConvert( tmp.substr(5, 2)   ) - 1);
 		info.tm_mday = static_cast<int>(StringConvert( tmp.substr(8, 2)));
@@ -270,7 +272,7 @@ bool	BitcoinExchange::stringParserDB(std::string const & strREF, std::string spr
 
 int	BitcoinExchange::OpenAndParserINP(std::string const & FileName )
 {
-	std::ifstream	FileSrc(FileName);
+	std::ifstream	FileSrc(FileName.c_str());
 	if (!CheckFileStream(FileSrc, FileName))
 	{
 		return (0);
@@ -285,7 +287,7 @@ int	BitcoinExchange::OpenAndParserINP(std::string const & FileName )
 
 int	BitcoinExchange::OpenAndParserDB(std::string const & FileName )
 {
-	std::ifstream	FileSrc(FileName);
+	std::ifstream	FileSrc(FileName.c_str());
 	if (!CheckFileStream(FileSrc, FileName))
 	{
 		return (0);

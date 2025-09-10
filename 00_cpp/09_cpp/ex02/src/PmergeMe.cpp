@@ -19,6 +19,7 @@ PmergeMe::PmergeMe(const std::string* arNbr, size_t size)
 PmergeMe::PmergeMe(PmergeMe const & src)
 {
     std::cout << "Copy constructor called" << std::endl;
+	(void)src;
     //*this = src;
 }
 
@@ -50,7 +51,6 @@ void PmergeMe::printTreeList() const
     int livello = 0;
     for (std::vector<std::list<int> >::const_iterator it = this->_c.begin(); it != this->_c.end(); ++it)
     {
-        std::cout << "Livello " << livello << ":\n";
         printList(it->begin(), it->end());
         std::cout << "\n";
         ++livello;
@@ -62,7 +62,6 @@ void PmergeMe::printTreeDeque() const
     int livello = 0;
     for (std::deque<std::deque<int> >::const_iterator it = this->_d.begin(); it != this->_d.end(); ++it)
     {
-        std::cout << "Livello " << livello << ":\n";
         printList(it->begin(), it->end());
         std::cout << "\n";
         ++livello;

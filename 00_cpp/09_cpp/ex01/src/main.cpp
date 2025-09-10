@@ -6,7 +6,7 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 16:42:57 by jfranco           #+#    #+#             */
-/*   Updated: 2025/08/27 18:18:06 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/09/10 15:05:51 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 		prmtrs = new std::string[argc - 1];
 		char **Cpy = argv + 1;
 		size = argc - 1;
-		for (size_t i = 0; i < argc - 1; ++i)
+		for (int i = 0; i < argc - 1; ++i)
 		{
 			prmtrs[i] = std::string(Cpy[i]);
 		}
@@ -44,7 +44,6 @@ int main(int argc, char **argv)
 	else
 	{
 		size_t i = 0;
-		size_t y = 0;
 		std::string Cpy = std::string(argv[1]);
 		prmtrs = new std::string[ftTokeCount(Cpy)];
 		size = ftTokeCount(Cpy);
