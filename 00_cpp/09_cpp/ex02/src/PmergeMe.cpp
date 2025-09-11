@@ -111,8 +111,8 @@ void PmergeMe::FordJohnsonVector(std::vector<int>& vecREF, size_t pairSize) {
     FordJohnsonVector(vecREF, pairSize * 2);
 	std::cout << "-------" << pairSize << "\n";
 	printVec(vecREF, "LIST: ");
-	std::vector<int> b1anda; //main tutti i piu grandi e davanti il piu piccolo
-	std::vector<int> other; //pending i piu piccoli 
+	std::vector<int> b1anda; //main tutti i piu grandi e davanti il piu piccolo b1 a1 a2 a3 a4 a5
+	std::vector<int> other; //pending i piu piccoli b2 b3 b4 b5 b6
 	for (size_t i = 0; i + pairSize <= vecREF.size(); i += pairSize * 2) {
 		for (size_t j = i; j < i + pairSize && j < vecREF.size(); ++j) {
 			other.push_back(vecREF[j]);
