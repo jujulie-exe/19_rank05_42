@@ -6,22 +6,32 @@
 /*   By: jfranco <jfranco@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/29 17:50:44 by jfranco           #+#    #+#             */
-/*   Updated: 2025/09/10 15:50:50 by jfranco          ###   ########.fr       */
+/*   Updated: 2025/09/11 18:08:01 by jfranco          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/PmergeMe.hpp"
+#include <stdlib.h>
+#include <algorithm>
 
 int main()
 {
 	std::vector<int> test;
-	for (size_t i = 10; i != 0 ; --i)
+	for (size_t i = 40; i != 0 ; --i)
 	{
-		test.push_back(i);
+		test.push_back();
 	}
 	for (size_t i = 0; i < test.size(); ++i)
 	{
 		std::cout << test[i] << " ";
+	}
+	if (std::is_sorted(test.begin(), test.end()) == true)
+	{
+		std::cout << "is sorted \n ";
+	}
+	else
+	{
+		std::cout << "is not sorted \n ";
 	}
 	PmergeMe instance;
 	clock_t init = clock();
@@ -32,6 +42,17 @@ int main()
 	for (size_t i = 0; i < test.size(); ++i)
 	{
 		std::cout << test[i] << " ";
+	}
+	std::cout << "\n";
+	std::cout << instance.getNumberCmp() << "\n";
+	if (std::is_sorted(test.begin(), test.end()) == true)
+	{
+		std::cout << "is sorted \n ";
+	}
+	else
+	{
+		std::cout << "is not sorted \n ";
+
 	}
 
 	return (0);

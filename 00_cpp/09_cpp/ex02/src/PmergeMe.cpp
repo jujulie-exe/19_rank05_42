@@ -4,7 +4,7 @@
 bool PmergeMe::ft_cmp(int a, int b)
 {
 	this->cmp++;
-	return(b < a);
+	return(b  < a);
 }
 
 PmergeMe::PmergeMe()
@@ -51,81 +51,114 @@ std::set<int>	PmergeMe::Jacobsthal(size_t maxNbr)
 	}
 	return tmp;
 }
+void	PmergeMe::insertWithJacob(std::vector<int> &main, std::vector<int> &peding, size_t pairSize)
+{
+	std::set<int> JacobList = Jacobsthal(peding.size() / pairSize);
+	size_t i = 0;
+	for (std::set<int>::iterator it = JacobList.begin(); it != JacobList.end(); ++it, ++i) {
+		size_t idx = *it * pairSize;
+		if (idx + pairSize <= peding.size()) {
+			std::vector<int> insert(peding.begin() + idx, peding.begin() + idx + pairSize);
+			printVec(insert, "INSERT JACOB: ");
+			binaryInsertGroup(main, insert, pairSize - 1);
+			printVec(main, "MAIN AFETR INSERT: ");
+		}
+		
+	}
+}
+static bool nonPresent(const std::set<int>& Jacob, size_t nbr)
+{
+    return Jacob.find(static_cast<int>(nbr)) == Jacob.end();
+}
+
+void PmergeMe::insertREST(std::vector<int> &main, std::vector<int> &peding, size_t pairSize)
+{
+    std::set<int> JacobList = Jacobsthal(peding.size() / pairSize);
+
+    size_t totalBlocks = peding.size() / pairSize;
+
+    for (size_t block = 0; block < totalBlocks; ++block) {
+        if (nonPresent(JacobList, block)) {
+            size_t idxi = block * pairSize;
+            if (idxi + pairSize <= peding.size()) {
+                std::vector<int> insert(peding.begin() + idxi, peding.begin() + idxi + pairSize);
+                printVec(insert, "INSERT REST: ");
+                binaryInsertGroup(main, insert, pairSize - 1);
+                printVec(main, "MAIN AFTER INSERT: ");
+            }
+        }
+    }
+}
+
+
 void PmergeMe::FordJohnsonVector(std::vector<int>& vecREF, size_t pairSize) {
     size_t n = vecREF.size();
 
     if (pairSize >= n)
+	{
         return;
+	}
 
+	printVec(vecREF, "LIST: ");
     for (size_t i = 0; i + 2 * pairSize <= n; i += 2 * pairSize) {
-        if (ft_cmp(vecREF[i], vecREF[i + pairSize])) {
+		if (i + pairSize < vecREF.size() && ft_cmp(vecREF[i], vecREF[i + pairSize])){
             for (size_t j = 0; j < pairSize; ++j) {
                 std::swap(vecREF[i + j], vecREF[i + pairSize + j]);
             }
         }
     }
+	printVec(vecREF, "LIST: ");
     FordJohnsonVector(vecREF, pairSize * 2);
-	std::vector<int> b1anda; //main
-	std::vector<int> other; //pending
+	std::cout << "-------" << pairSize << "\n";
+	printVec(vecREF, "LIST: ");
+	std::vector<int> b1anda; //main tutti i piu grandi e davanti il piu piccolo
+	std::vector<int> other; //pending i piu piccoli 
 	for (size_t i = 0; i + pairSize <= vecREF.size(); i += pairSize * 2) {
 		for (size_t j = i; j < i + pairSize && j < vecREF.size(); ++j) {
-			b1anda.push_back(vecREF[j]);
+			other.push_back(vecREF[j]);
+			std::cout << "PIU PICCOLO" << vecREF[j] << "\n";
 		}
 		for (size_t j = i + pairSize; j < i + 2 * pairSize && j < vecREF.size(); ++j) {
-			other.push_back(vecREF[j]);
+			b1anda.push_back(vecREF[j]);
+			std::cout << "PIU GRANDE" << vecREF[j] << "\n";
 		}
 	}
-	if (!b1anda.empty()) {
-		other.insert(other.begin(), b1anda[0]); 
-		b1anda.erase(b1anda.begin());
+	if (!b1anda.empty() && pairSize < other.size() && pairSize != 0) {
+		b1anda.insert(b1anda.begin(), other.begin(), other.begin() + pairSize);
+		other.erase(other.begin(), other.begin() + pairSize);
 	}
-
-	std::set<int> JacobList = Jacobsthal(other.size() / pairSize);
-	{
-	size_t i = 0;
-	for (std::set<int>::iterator it = JacobList.begin(); it != JacobList.end(); ++it, ++i) {
-		size_t idx = *it * pairSize;
-		if (idx + pairSize <= other.size()) {
-			std::vector<int> insert(other.begin() + idx, other.begin() + idx + pairSize);
-			std::cout << "INSERT: ";
-			printVec(insert);
-			std::cout << "\n";
-			binaryInsertGroup(b1anda, insert, pairSize);
-		}
-	}
-	}
-
-//	for(size_t i = 0; i < JacobList.size(); ++i)
-//	{
-//		int idx = static_cast<size_t>(JacobList[i]);
-//		if (idx + pairSize <= other.size()) {
-//			std::vector<int> insert(other.begin() + idx, other.begin() + idx + pairSize);
-//			binaryInsertGroup(b1anda, other, pairSize);
-//		}
-//	}
-	//add jacob and binarySort
-// Add elementi dispari (rimanenti) alla main chain
-	size_t remainder = vecREF.size() % ( 2 * pairSize);
-	if (remainder != 0) {
-	    size_t start = vecREF.size() - remainder;
-	    for (size_t i = start; i != 0; --i) {
-	        b1anda.push_back(vecREF[i]);
-	    }
+	printVec(b1anda, "MAIN: ");
+	printVec(other, "PEDDING: ");
+	insertWithJacob(b1anda, other, pairSize);
+	insertREST(b1anda, other, pairSize);
+	if (b1anda.size() != vecREF.size()) {
+		std::vector<int> insert;
+		std::cout << "Diffret size " << vecREF.size() << " " << b1anda.size() << " "<< vecREF.size() - b1anda.size() << "\n";
+    for (size_t i = b1anda.size(); i < vecREF.size(); ++i) {
+        insert.push_back(vecREF[i]);
+    }
+		printVec(insert, "INSERT REST: ");
+		printVec(b1anda, "LIST: ");
+		binaryInsertGroup(b1anda, insert, (insert.size() - 1));
+		printVec(b1anda, "LIST: ");
 	}
 	vecREF = b1anda;
 }
-void	PmergeMe::printVec(std::vector<int> t) const
+void	PmergeMe::printVec(std::vector<int> t, const std::string &MSG) const
 {
+	std::cout << MSG;
 	for (size_t i = 0; i < t.size(); ++i)
 	{
-		std::cout << t[i];
+		std::cout << t[i] << " ";
 	}
+	std::cout << "\n";
 }
 void PmergeMe::binaryInsertGroup(std::vector<int>& mainChain, const std::vector<int>& group, size_t SizePairs) {
-    if (group.size() <= SizePairs)
+    if (group.size() < SizePairs)
 		return;
     //int maxElement = *std::max_element(group.begin(), group.end());
 	int maxElement = group[SizePairs];
+	std::cout << maxElement << "element MAX \n";
     std::vector<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), maxElement);
     mainChain.insert(insertPos, group.begin(), group.end());
 }

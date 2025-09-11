@@ -31,7 +31,9 @@ class PmergeMe
 	   std::set<int>	Jacobsthal(size_t maxNbr);
 		size_t cmp;
 	void	binaryInsertGroup(std::vector<int>& mainChain, const std::vector<int>& group, size_t SizePairs);
-	void	printVec(std::vector<int> t) const;
+	void	printVec(std::vector<int> t, const std::string &MSG) const;
+	void	insertWithJacob(std::vector<int> &main, std::vector<int> &peding, size_t pairSize);
+	void	insertREST(std::vector<int> &main, std::vector<int> &peding, size_t pairSize);
 };
 // std::ostream &operator<<(std::ostream &o, const PmergeMe &rhs);
 #endif // PMERGEME_H
