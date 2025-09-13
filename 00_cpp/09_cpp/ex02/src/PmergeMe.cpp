@@ -226,7 +226,7 @@ if (!other.empty()  && pairSize <= other.size()) {
     // Inserisci gli elementi unpaired alla fine
     if (!unpaired.empty()) {
         printVec(unpaired, "INSERTING UNPAIRED: ");
-		if (1)
+		if (b1anda.empty())
 		{
 			//binaryInsertGroup(b1anda, unpaired, unpaired.size() - 1);
 			for (size_t i = 0; i < unpaired.size(); ++i)
@@ -290,13 +290,15 @@ void PmergeMe::binaryInsertGroup(std::vector<int>& mainChain, const std::vector<
 
     // Trova la posizione dove inserire usando binary search sul pivot
     std::vector<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), pivotElement);
-	for (size_t i = 0; i < pivotIndex; ++i)
-	{
-		insertPos--;
-	}
+    insertPos = std::lower_bound(mainChain.begin(), insertPos, pivotElement);
+    std::cout << *insertPos << " VALUE POS DECONT \n";
+//	for (size_t i = 0; i < pivotIndex; ++i)
+//	{
+//		insertPos--;
+//	}
 
     if (insertPos != mainChain.end()) {
-        std::cout << *insertPos << " VALUE INSERTPOS \n";
+        std::cout << *insertPos << " AFTER DECONT VALUE INSERTPOS \n";
     } else {
         std::cout << "INSERT AT END\n";
     }
