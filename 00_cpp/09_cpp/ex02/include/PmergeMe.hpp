@@ -6,6 +6,7 @@
 #include <vector>
 #include <vector>  
 #include <set>
+#include <algorithm>
 
 class PmergeMe
 {

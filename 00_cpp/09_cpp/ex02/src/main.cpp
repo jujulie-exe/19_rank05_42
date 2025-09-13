@@ -17,9 +17,9 @@
 int main()
 {
 	std::vector<int> test;
-	for (size_t i = 40; i != 0 ; --i)
+	for (size_t i = 15; i != 0 ; --i)
 	{
-		test.push_back();
+		test.push_back(rand() % 1000 + 1);
 	}
 	for (size_t i = 0; i < test.size(); ++i)
 	{
