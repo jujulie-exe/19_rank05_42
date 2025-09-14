@@ -46,16 +46,34 @@ static bool is_sorted(const T& container) {
 }
 
 
-static bool miniParser(char **argc, size_t size, std::vector<int> &vec, std::deque<int> &dequ)
+static bool miniParser(char **argc, size_t size, std::vector<int> &vec, std::deque<int> &dequ, bool flags)
 {
-	std::string cpy = std::string(argc[0]);
-	std::size_t found = cpy.find_first_not_of("1234567890 ");
-	(void)size;
-	if (found!=std::string::npos)
+	std::string cpy;
+	if (flags == true)
 	{
-		std::cout << "The first alphabetic character is " << cpy[found];
-		std::cout << " at position " << found << '\n';
-		return false;
+	    for (size_t i = 0; i < size; ++i) {
+	        cpy += argc[i];
+	        cpy += " ";
+	    }
+	    std::size_t found = cpy.find_first_not_of("1234567890 ");
+	    if (found != std::string::npos)
+	    {
+	        std::cout << "Il primo carattere non numerico è '" << cpy[found]
+	                  << "' alla posizione " << found << '\n';
+	        return false;
+	    }
+	}
+	else
+	{
+		cpy = std::string(argc[0]);
+		std::size_t found = cpy.find_first_not_of("1234567890 ");
+		(void)size;
+		if (found!=std::string::npos)
+		{
+			std::cout << "The first alphabetic character is " << cpy[found];
+			std::cout << " at position " << found << '\n';
+			return false;
+		}
 	}
 	std::stringstream ss(cpy);
 	std::string token;
@@ -83,11 +101,22 @@ static bool miniParser(char **argc, size_t size, std::vector<int> &vec, std::deq
 }
 int main(int argc, char **argv)
 {
-	if (argc != 2)
+	bool miniPars = true;
+	if (argc > 2)
+	{
+		miniPars = true;
+	}
+	else if (argc == 2)
+	{
+		miniPars = false;
+	}
+	else if (argc <= 1)
+	{
 		return 0;
+	}
 	std::vector<int> vec;
 	std::deque<int> deque;
-	if (miniParser(argv + 1, argc - 1, vec, deque) == false)
+	if (miniParser(argv + 1, argc - 1, vec, deque, miniPars) == false)
 		return 1;
 	PmergeMe instance;
 	clock_t init = clock();
