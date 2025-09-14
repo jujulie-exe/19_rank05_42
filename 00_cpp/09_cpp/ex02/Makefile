@@ -1,7 +1,7 @@
 NAME = PmergeMe
 MODE ?= normal
 CC = c++
-CFLAGS = -Wall -Wextra  -Werror #-std=c++98 -g3
+CFLAGS = -Wall -Wextra  -Werror -std=c++98 -g3
 
 ifeq ($(MODE), hard)
 CFLAGS += \
@@ -22,7 +22,8 @@ endif
 
 SRC_DIR = src
 SRCS = $(SRC_DIR)/main.cpp \
-		$(SRC_DIR)/PmergeMe.cpp
+		$(SRC_DIR)/PmergeMe.cpp \
+		$(SRC_DIR)/PmergeMeDeque.cpp
 
 
 OBJ_DIR = obj
