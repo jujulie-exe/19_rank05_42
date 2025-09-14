@@ -12,48 +12,101 @@
 
 #include "../include/PmergeMe.hpp"
 #include <stdlib.h>
-#include <algorithm>
-
-int main()
+#include <sstream>
+static int my_atoi_stream(const std::string &s)
 {
-	std::vector<int> test;
-	for (size_t i = 15; i != 0 ; --i)
+    std::istringstream iss(s);
+    int value = 0;
+    iss >> value;
+    return value;
+}
+
+template <typename T>
+static void printe(const T& container) {
+    size_t m;
+    if (container.size() > 21) {
+        m = 21;
+    } else {
+        m = container.size();
+    }
+    for (size_t i = 0; i < m; ++i) {
+        std::cout << container[i] << " ";
+    }
+    std::cout << "\n";
+}
+
+template <typename T>
+static bool is_sorted(const T& container) {
+    for (size_t i = 1; i < container.size(); ++i) {
+        if (container[i] < container[i - 1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+static bool miniParser(char **argc, size_t size, std::vector<int> &vec, std::deque<int> &dequ)
+{
+	std::string cpy = std::string(argc[0]);
+	std::size_t found = cpy.find_first_not_of("1234567890 ");
+	(void)size;
+	if (found!=std::string::npos)
 	{
-		test.push_back(rand() % 1000 + 1);
+		std::cout << "The first alphabetic character is " << cpy[found];
+		std::cout << " at position " << found << '\n';
+		return false;
 	}
-	for (size_t i = 0; i < test.size(); ++i)
+	std::stringstream ss(cpy);
+	std::string token;
+	while (ss >> token)
+	{	
+		vec.push_back(my_atoi_stream(token)); // fix: atoi expects const char*
+        dequ.push_back(my_atoi_stream(token)); // assuming you also want to fill deque
+	}
+
+
+	// check double
+	for (size_t i = 0; i < vec.size(); ++i)
 	{
-		std::cout << test[i] << " ";
+		for (size_t y = i + 1; y < vec.size(); ++y )
+		{
+			if (vec[i] == vec[y])
+			{
+				std::cout << "nbr is not unique\n";
+				return false;
+			}
+		}
 	}
-	if (std::is_sorted(test.begin(), test.end()) == true)
-	{
-		std::cout << "is sorted \n ";
-	}
-	else
-	{
-		std::cout << "is not sorted \n ";
-	}
+	return true;
+	
+}
+int main(int argc, char **argv)
+{
+	if (argc != 2)
+		return 0;
+	std::vector<int> vec;
+	std::deque<int> deque;
+	if (miniParser(argv + 1, argc - 1, vec, deque) == false)
+		return 1;
 	PmergeMe instance;
 	clock_t init = clock();
-	instance.FordJohnsonVector(test, 1);
+	instance.FordJohnsonVector(vec, 1);
 	clock_t end = clock();
-	std::cout << "Time to process a range of"  << ((float)(end - init)) *1000 / (CLOCKS_PER_SEC) << " whit: std::list \n";
+	std::cout << "Time to process a range of"  << ((float)(end - init)) *1000 / (CLOCKS_PER_SEC) << " whit: std::vector \n";
 	std::cout << "After: ";
-	for (size_t i = 0; i < test.size(); ++i)
+	printe(vec);
+	init = clock();
+	instance.FordJohnsonVector(deque, 1);
+	end = clock();
+	std::cout << "Time to process a range of"  << ((float)(end - init)) *1000 / (CLOCKS_PER_SEC) << " whit: std::vector \n";
+	std::cout << "After: ";
+	printe(deque);
+	if (!(is_sorted(vec) == false || is_sorted(deque)))
 	{
-		std::cout << test[i] << " ";
+		std::cout << "is NOT SORTED!!" << "\n";
 	}
 	std::cout << "\n";
-	std::cout << instance.getNumberCmp() << "\n";
-	if (std::is_sorted(test.begin(), test.end()) == true)
-	{
-		std::cout << "is sorted \n ";
-	}
-	else
-	{
-		std::cout << "is not sorted \n ";
-
-	}
 
 	return (0);
 }

@@ -1,68 +1,14 @@
+
 #include "../include/PmergeMe.hpp"
-       /*♡♡♡♡♡♡♡♡♡♡♡CTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-static bool ft_cmp_global(int a, int b)
-{
-	return(b  < a);
-}
 
-bool PmergeMe::ft_cmp(int a, int b)
-{
-	this->cmp++;
-	return(b  < a);
-}
-
-PmergeMe::PmergeMe()
-	: cmp(0)
-{
-
-    std::cout << "Default constructor called" << std::endl;
-    // ctor
-}
-
-PmergeMe::PmergeMe(PmergeMe const & src)
-{
-    std::cout << "Copy constructor called" << std::endl;
-	(void)src;
-    //*this = src;
-}
-
-       /*♡♡♡♡♡♡♡♡♡♡♡GETTER♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-size_t PmergeMe::getNumberCmp( void ) const
-{
-	return this->cmp;
-}
-       /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-static int JacobsthalRECU(int n)
-{
-    if (n == 0)
-        return 0;
-    if (n == 1)
-        return 1;
-    return JacobsthalRECU(n - 1) + 2 * JacobsthalRECU(n - 2);
-}
-
-std::set<int>	PmergeMe::Jacobsthal(size_t maxNbr)
-{
-	std::set<int> tmp;
-	int result = -1;
-	int index = 0;
-	while (static_cast<int>( maxNbr ) >= result)
-	{
-		result = JacobsthalRECU(index);
-		if (result <= static_cast<int>(maxNbr))
-			tmp.insert(result);
-		index++;
-	}
-	return tmp;
-}
-void	PmergeMe::insertWithJacob(std::vector<int> &main, std::vector<int> &peding, size_t pairSize)
+void	PmergeMe::insertWithJacob(std::deque<int> &main, std::deque<int> &peding, size_t pairSize)
 {
 	std::set<int> JacobList = Jacobsthal(peding.size() / pairSize);
 	size_t i = 0;
 	for (std::set<int>::reverse_iterator it = JacobList.rbegin(); it != JacobList.rend(); ++it, ++i) {
 		size_t idx = *it * pairSize;
 		if (idx + pairSize <= peding.size()) {
-			std::vector<int> insert(peding.begin() + idx, peding.begin() + idx + pairSize);
+			std::deque<int> insert(peding.begin() + idx, peding.begin() + idx + pairSize);
 			binaryInsertGroup(main, insert, pairSize  - 1);
 		}
 		
@@ -73,7 +19,7 @@ static bool nonPresent(const std::set<int>& Jacob, size_t nbr)
     return Jacob.find(static_cast<int>(nbr)) == Jacob.end();
 }
 
-void PmergeMe::insertREST(std::vector<int> &main, std::vector<int> &peding, size_t pairSize)
+void PmergeMe::insertREST(std::deque<int> &main, std::deque<int> &peding, size_t pairSize)
 {
     std::set<int> JacobList = Jacobsthal(peding.size() / pairSize);
 
@@ -83,13 +29,13 @@ void PmergeMe::insertREST(std::vector<int> &main, std::vector<int> &peding, size
         if (nonPresent(JacobList, block)) {
             size_t idxi = block * pairSize;
             if (idxi + pairSize <= peding.size()) {
-                std::vector<int> insert(peding.begin() + idxi, peding.begin() + idxi + pairSize);
+                std::deque<int> insert(peding.begin() + idxi, peding.begin() + idxi + pairSize);
                 binaryInsertGroup(main, insert, insert.size() - 1);
             }
         }
     }
 }
-void PmergeMe::FordJohnsonVector(std::vector<int>& vecREF, size_t pairSize) {
+void PmergeMe::FordJohnsonVector(std::deque<int>& vecREF, size_t pairSize) {
  size_t n = vecREF.size();
 
     if (pairSize >= n) {
@@ -107,9 +53,9 @@ void PmergeMe::FordJohnsonVector(std::vector<int>& vecREF, size_t pairSize) {
 
 
     FordJohnsonVector(vecREF, pairSize * 2);
-    std::vector<int> b1anda; //main
-    std::vector<int> other;  //pending
-    std::vector<int> unpaired; //elementi che non possono essere accoppiati
+    std::deque<int> b1anda; //main
+    std::deque<int> other;  //pending
+    std::deque<int> unpaired; //elementi che non possono essere accoppiati
 
 	for (size_t i = 0; i < n; i += pairSize * 2) {
     bool canPairCompletely = (i + 2 * pairSize <= n);
@@ -170,7 +116,7 @@ void PmergeMe::FordJohnsonVector(std::vector<int>& vecREF, size_t pairSize) {
 			//binaryInsertGroup(b1anda, unpaired, unpaired.size() - 1);
 			for (size_t i = 0; i < unpaired.size(); ++i)
 			{
-				std::vector<int>::iterator insertPos = std::lower_bound(b1anda.begin(), b1anda.end(), unpaired[i]);
+				std::deque<int>::iterator insertPos = std::lower_bound(b1anda.begin(), b1anda.end(), unpaired[i]);
 				b1anda.insert(insertPos, unpaired.begin() + i, unpaired.begin() + i + 1);
 			}
 		}
@@ -185,68 +131,15 @@ void PmergeMe::FordJohnsonVector(std::vector<int>& vecREF, size_t pairSize) {
     vecREF = b1anda;
 }
 
-void	PmergeMe::printVec(std::vector<int> t, const std::string &MSG) const
-{
-	std::cout << MSG;
-	for (size_t i = 0; i < t.size(); ++i)
-	{
-		std::cout << t[i] << " ";
-	}
-	std::cout << "\n";
-}
 
-
-void PmergeMe::binaryInsertGroup(std::vector<int>& mainChain, const std::vector<int>& group, size_t pivotIndex) {
+void PmergeMe::binaryInsertGroup(std::deque<int>& mainChain, const std::deque<int>& group, size_t pivotIndex) {
     if (pivotIndex >= group.size()) {
         return;
     }
     int pivotElement = group[pivotIndex];
-    std::vector<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), pivotElement);
+    std::deque<int>::iterator insertPos = std::lower_bound(mainChain.begin(), mainChain.end(), pivotElement);
 	insertPos = std::lower_bound(mainChain.begin(), insertPos, pivotElement);
-	ft_cmp_global(0,0);
     mainChain.insert(insertPos, group.begin(), group.end());
 }
 
-
-//void PmergeMe::binaryInsert(std::deque<int>::iterator nb, std::deque<int>::iterator low, std::deque<int>::iterator high)
-//{
-//    size_t lowIdx = low - d.begin();
-//    size_t highIdx = high - d.begin();
-//
-//    int value = *nb;
-//
-//    while (cmp(lowIdx < highIdx)) {
-//        size_t midIdx = lowIdx + (highIdx - lowIdx) / 2;
-//        if (value <= d[midIdx])
-//            highIdx = midIdx;
-//        else
-//            lowIdx = midIdx + 1;
-//    }
-//	//TODO:INSERIRE TUTTO UN CONTINER IN POSIZIONE GIUSTA
-//    d.insert(vecREF.begin() + lowIdx, value);
-//}
- 
-       /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-PmergeMe &PmergeMe::operator=( PmergeMe const &rhs)
-{
-    std::cout << "Copy assignment operator called" << std::endl;
-    if (this != &rhs)
-    {
-        // this->_n = rhs.getValue();
-    }
-    return *this;
-}
-
-       /*♡♡♡♡♡♡♡♡♡♡♡DTOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
-PmergeMe::~PmergeMe()
-{
-    std::cout << "Destructor called" << std::endl;
-    // dtor
-}
-
-/* std::ostream &operator<<(std::ostream &o, const PmergeMe &rhs)
-{
-   o << rhs.getName() << std::endl;
-   return o;
-} */
 

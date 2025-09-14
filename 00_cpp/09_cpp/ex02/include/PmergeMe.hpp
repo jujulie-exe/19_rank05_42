@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <vector>  
+#include <deque>
 #include <set>
 #include <algorithm>
 
@@ -20,6 +21,7 @@ class PmergeMe
  
        /*♡♡♡♡♡♡♡♡♡♡♡FT♡♡♡♡♡♡♡♡♡♡♡♡♡*/
 	   void	FordJohnsonVector(std::vector<int> &vecREF, size_t pairSize);
+	   void	FordJohnsonVector(std::deque<int> &vecREF, size_t pairSize);
 
  
        /*♡♡♡♡♡♡♡♡♡♡♡OPERATOR♡♡♡♡♡♡♡♡♡♡♡♡♡*/
@@ -35,6 +37,10 @@ class PmergeMe
 	void	printVec(std::vector<int> t, const std::string &MSG) const;
 	void	insertWithJacob(std::vector<int> &main, std::vector<int> &peding, size_t pairSize);
 	void	insertREST(std::vector<int> &main, std::vector<int> &peding, size_t pairSize);
+	void	binaryInsertGroup(std::deque<int>& mainChain, const std::deque<int>& group, size_t SizePairs);
+	void	printVec(std::deque<int> t, const std::string &MSG) const;
+	void	insertWithJacob(std::deque<int> &main, std::deque<int> &peding, size_t pairSize);
+	void	insertREST(std::deque<int> &main, std::deque<int> &peding, size_t pairSize);
 };
 // std::ostream &operator<<(std::ostream &o, const PmergeMe &rhs);
 #endif // PMERGEME_H
